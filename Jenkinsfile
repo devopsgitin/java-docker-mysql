@@ -8,7 +8,7 @@ pipeline{
     stages{
         stage('Build Petclinic App'){
             steps{
-                sh 'mvn package'
+                sh 'mvn package -DskipTests'
             }
         }
     }
