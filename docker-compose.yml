@@ -1,10 +1,23 @@
-db:
-  image: mysql:5.7
-  ports:
-    - "3306:3306"
-  environment:
-    - MYSQL_ROOT_PASSWORD=
-    - MYSQL_ALLOW_EMPTY_PASSWORD=true
-    - MYSQL_USER=petclinic
-    - MYSQL_PASSWORD=petclinic
-    - MYSQL_DATABASE=petclinic
+version: '3.7'
+services:
+  mydb:
+    image: mysql:5.7
+    ports:
+      - 3300:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=petclinic
+      - MYSQL_PASSWORD=petclinic
+      - MYSQL_DATABASE=petclinic
+    volumes:
+      - mydb_vol:/var/lib/mysql
+  myapp:
+    image: myapp:v1
+    ports:
+      - 8080:8080
+    environment:
+      - SPRING_PROFILES_ACTIVE=mysql
+    depends_on:
+      - mydb
+volumes:
+  mydb_vol:
